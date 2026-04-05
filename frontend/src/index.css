@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
@@ -336,4 +340,118 @@ tr {
 
 tr:hover {
   background: rgba(248, 250, 252, 0.8);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.performer-item:hover {
+  background: rgba(99, 102, 241, 0.05);
+  border-radius: 8px;
+  transform: translateX(5px);
+}
+
+/* Mobile Responsive App-like UI */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1.2rem 1rem;
+  }
+
+  .navbar {
+    padding: 1rem;
+    flex-direction: column;
+    height: auto;
+    gap: 1rem;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .grid-cards {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+
+  .glass-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .nine-box-container {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+  }
+
+  .nine-box-y-axis {
+    writing-mode: horizontal-tb !important;
+    transform: none !important;
+    margin-bottom: 1rem;
+  }
+
+  .nine-box-x-axis {
+    grid-column: 1 !important;
+    margin-top: 1rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
 }

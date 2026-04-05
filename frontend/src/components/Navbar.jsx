@@ -16,7 +16,10 @@ const Navbar = () => {
             <div className="nav-links">
                 {user ? (
                     <>
-                        <span style={{ fontWeight: 500 }}>Hello, {user.name} ({user.role})</span>
+                        {(user.role === 'Admin' || user.role === 'Manager') && (
+                            <Link to="/analytics" style={{ fontWeight: 600 }}>Analytics</Link>
+                        )}
+                        <span style={{ fontWeight: 500, color: 'var(--text-muted)' }}>{user.name}</span>
                         <button onClick={handleLogout} className="btn btn-logout">Logout</button>
                     </>
                 ) : (

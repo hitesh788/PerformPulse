@@ -5,6 +5,7 @@ import Signup from './pages/Signup';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import ManagerDashboard from './pages/ManagerDashboard';
 import AdminPanel from './pages/AdminPanel';
+import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,7 +13,7 @@ function App() {
     const user = JSON.parse(localStorage.getItem('userInfo'));
 
     return (
-        <Router>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <div className="app-container">
                 <ToastContainer position="top-right" autoClose={2000} />
                 <Navbar />
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/employee" element={<EmployeeDashboard />} />
                         <Route path="/manager" element={<ManagerDashboard />} />
                         <Route path="/admin" element={<AdminPanel />} />
+                        <Route path="/analytics" element={<AnalyticsDashboard />} />
                     </Routes>
                 </main>
             </div>

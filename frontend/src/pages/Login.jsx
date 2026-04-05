@@ -55,8 +55,8 @@ const Login = () => {
 
                 <div className="divider">OR</div>
 
-                <p className="signup-text">
-                 <center>   New to PerformPulse? <Link to="/signup">Create Account</Link> </center>
+                <p className="signup-text text-center" style={{ textAlign: 'center' }}>
+                    New to PerformPulse? <Link to="/signup">Create Account</Link>
                 </p>
             </div>
 
