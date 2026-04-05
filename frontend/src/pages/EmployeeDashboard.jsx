@@ -8,6 +8,7 @@ const EmployeeDashboard = () => {
     const [kpis, setKpis] = useState([]);
     const [scores, setScores] = useState({ averageScore: 0, scores: [] });
     const [feedbacks, setFeedbacks] = useState([]);
+    const [badges, setBadges] = useState([]);
     const [newKpi, setNewKpi] = useState({ title: '', description: '', target: '', category: 'Operational Excellence' });
 
     const categories = ['Innovation', 'Customer Success', 'Operational Excellence', 'Team Leadership'];
@@ -26,6 +27,21 @@ const EmployeeDashboard = () => {
             setKpis(kpiRes.data);
             setScores(scoreRes.data);
             setFeedbacks(feedbackRes.data);
+
+            const earnedBadges = [];
+            const avgScoreNumber = parseFloat(scoreRes.data.averageScore || 0);
+
+            if (avgScoreNumber >= 4.0) earnedBadges.push({ title: 'Top Performer 🏆', color: 'var(--secondary-color)' });
+
+            const kpiDocs = kpiRes.data;
+            const completedKpis = kpiDocs.filter(k => k.target > 0 && k.progress >= k.target);
+            if (completedKpis.length >= 3) earnedBadges.push({ title: 'Execution Master 🎯', color: 'var(--primary-color)' });
+
+            if (kpiDocs.some(k => k.category === 'Innovation' && k.target > 0 && k.progress >= k.target)) {
+                earnedBadges.push({ title: 'Innovator 💡', color: '#f59e0b' });
+            }
+
+            setBadges(earnedBadges);
         } catch (error) {
             console.error(error);
         }
@@ -76,10 +92,22 @@ const EmployeeDashboard = () => {
         <div>
             <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
-                    <h1>Employee Dashboard</h1>
+                    <h1 style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        Employee Dashboard
+                        <button onClick={() => window.print()} className="btn btn-primary" style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem', borderRadius: '8px' }}>
+                            📄 Export PDF
+                        </button>
+                    </h1>
                     <div className="subtitle">Welcome back, {user.name}. Here is your performance alignment.</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+                        {badges.map((b, i) => (
+                            <span key={i} style={{ padding: '0.3rem 0.6rem', background: 'rgba(255,255,255,0.8)', border: `1.5px solid ${b.color}`, color: b.color, borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700 }}>
+                                {b.title}
+                            </span>
+                        ))}
+                    </div>
                     <div style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Overall Score</div>
                     <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary-color)', lineHeight: 1 }}>{scores.averageScore}<span style={{ fontSize: '1.5rem', color: '#cbd5e1' }}>/5</span></div>
                 </div>

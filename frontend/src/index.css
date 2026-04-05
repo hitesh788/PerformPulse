@@ -455,3 +455,35 @@ tr:hover {
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* Automated Evaluation PDF Export Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .navbar,
+  .btn,
+  form,
+  input,
+  select {
+    display: none !important;
+  }
+
+  .glass-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .dashboard-header {
+    border-bottom: 2px solid black;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  table th {
+    color: black !important;
+  }
+}
