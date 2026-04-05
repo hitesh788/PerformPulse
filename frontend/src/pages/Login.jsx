@@ -55,11 +55,8 @@ const Login = () => {
 
                 <div className="divider">OR</div>
 
-                <button className="google-btn">Continue with Google</button>
-                <button className="apple-btn">Continue with Apple</button>
-
                 <p className="signup-text">
-                    New to PerformPulse? <Link to="/signup">Create Account</Link>
+                 <center>   New to PerformPulse? <Link to="/signup">Create Account</Link> </center>
                 </p>
             </div>
 

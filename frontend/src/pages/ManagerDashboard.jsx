@@ -71,7 +71,10 @@ const ManagerDashboard = () => {
         try {
             await api.post('/evaluation/feedback', {
                 employeeId: selectedEmp._id,
-                ...feedback
+                feedback: feedback.feedbackText,
+                rating: feedback.rating,
+                potentialRating: feedback.potentialRating,
+                performanceRating: feedback.performanceRating
             });
             toast.success('Enterprise Evaluation submitted successfully!');
         } catch (error) {
@@ -202,8 +205,8 @@ const ManagerDashboard = () => {
                                     <label>Overall Rating (1-5)</label>
                                     <input
                                         type="number" min="1" max="5" required
-                                        value={feedback.rating}
-                                        onChange={e => setFeedback({ ...feedback, rating: parseInt(e.target.value) })}
+                                        value={feedback.rating === undefined || Number.isNaN(feedback.rating) ? '' : feedback.rating}
+                                        onChange={e => setFeedback({ ...feedback, rating: e.target.value ? parseInt(e.target.value) : '' })}
                                     />
                                 </div>
                                 <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem', fontSize: '1.1rem' }}>Finalize Cycle Evaluation</button>
