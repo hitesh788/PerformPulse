@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import EmployeeDashboard from './pages/EmployeeDashboard';
@@ -22,10 +23,10 @@ function App() {
                         <Route path="/" element={<Navigate to={user ? `/${user.role.toLowerCase()}` : '/login'} />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
-                        <Route path="/employee" element={<EmployeeDashboard />} />
-                        <Route path="/manager" element={<ManagerDashboard />} />
-                        <Route path="/admin" element={<AdminPanel />} />
-                        <Route path="/analytics" element={<AnalyticsDashboard />} />
+                        <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+                        <Route path="/employee" element={<ProtectedRoute><EmployeeDashboard /></ProtectedRoute>} />
+                        <Route path="/manager" element={<ProtectedRoute><ManagerDashboard /></ProtectedRoute>} />
+                        <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
                     </Routes>
                 </main>
             </div>

@@ -8,6 +8,7 @@ import kpiRoutes from './routes/kpi.js';
 import progressRoutes from './routes/progress.js';
 import evaluationRoutes from './routes/evaluation.js';
 import scoreRoutes from './routes/score.js';
+import peerReviewRoutes from './routes/peerReview.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use('/api/kpi', kpiRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/evaluation', evaluationRoutes);
 app.use('/api/score', scoreRoutes);
+app.use('/api/peer-review', peerReviewRoutes);
 
 const PORT = process.env.PORT || 5000;
 

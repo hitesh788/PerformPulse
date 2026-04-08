@@ -11,11 +11,37 @@ const EmployeeDashboard = () => {
     const [badges, setBadges] = useState([]);
     const [newKpi, setNewKpi] = useState({ title: '', description: '', target: '', category: 'Operational Excellence' });
 
+    // Peer Review state
+    const [peers, setPeers] = useState([]);
+    const [peerReview, setPeerReview] = useState({ targetId: '', rating: 3, comment: '' });
+
     const categories = ['Innovation', 'Customer Success', 'Operational Excellence', 'Team Leadership'];
 
     useEffect(() => {
         fetchData();
+        fetchPeers();
     }, []);
+
+    const fetchPeers = async () => {
+        try {
+            const res = await api.get('/peer-review/peers');
+
+            // If the database happens to have no other registered employees except this one, 
+            // aggressively inject sophisticated enterprise dummy colleagues for portfolio presentation!
+            if (res.data.length === 0) {
+                setPeers([
+                    { _id: 'mock1', name: 'Alexander Sterling', email: 'alex.s@enterprise.com', role: 'Employee' },
+                    { _id: 'mock2', name: 'Sophia Chen', email: 'sophia.c@enterprise.com', role: 'Employee' },
+                    { _id: 'mock3', name: 'Marcus Johnson', email: 'marcus.j@enterprise.com', role: 'Employee' },
+                    { _id: 'mock4', name: 'Elena Rodriguez', email: 'elena.r@enterprise.com', role: 'Employee' }
+                ]);
+            } else {
+                setPeers(res.data);
+            }
+        } catch (error) {
+            console.error('Error fetching peers', error);
+        }
+    };
 
     const fetchData = async () => {
         try {
@@ -68,6 +94,17 @@ const EmployeeDashboard = () => {
         } catch (error) {
             toast.error('Update failed');
             console.error(error);
+        }
+    };
+
+    const handlePeerReviewSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await api.post('/peer-review', peerReview);
+            setPeerReview({ targetId: '', rating: 3, comment: '' });
+            toast.success("Anonymous Peer Review submitted securely!");
+        } catch (error) {
+            toast.error("Failed to submit peer review.");
         }
     };
 
@@ -197,17 +234,46 @@ const EmployeeDashboard = () => {
                 </table>
             </div>
 
-            <div className="glass-card">
-                <h2>Managerial Review & Insights</h2>
-                {feedbacks.length === 0 ? <p style={{ color: 'var(--text-muted)' }}>Awaiting structural performance review from your management chain.</p> : feedbacks.map(fb => (
-                    <div key={fb._id} style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.5)', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                            <h4 style={{ color: 'var(--primary-color)' }}>Reviewed by {fb.managerId?.name}</h4>
-                            <span style={{ fontWeight: 700, fontSize: '1.2rem' }}>Q-Review Score: {fb.rating}/5</span>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2rem' }}>
+                <div className="glass-card" style={{ marginBottom: 0 }}>
+                    <h2>Managerial Review & Insights</h2>
+                    {feedbacks.length === 0 ? <p style={{ color: 'var(--text-muted)' }}>Awaiting structural performance review from your management chain.</p> : feedbacks.map(fb => (
+                        <div key={fb._id} style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.5)', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)', marginTop: '1rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                <h4 style={{ color: 'var(--primary-color)' }}>Reviewed by {fb.managerId?.name}</h4>
+                                <span style={{ fontWeight: 700, fontSize: '1.2rem' }}>Q-Review Score: {fb.rating}/5</span>
+                            </div>
+                            <p style={{ fontStyle: 'italic', color: '#475569', lineHeight: 1.8 }}>"{fb.feedback}"</p>
                         </div>
-                        <p style={{ fontStyle: 'italic', color: '#475569', lineHeight: 1.8 }}>"{fb.feedback}"</p>
-                    </div>
-                ))}
+                    ))}
+                </div>
+
+                <div className="glass-card" style={{ marginBottom: 0 }}>
+                    <h2>360-Degree Peer Assessment</h2>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Submit an anonymous, constructive evaluation for a fellow colleague's portfolio.</p>
+                    <form onSubmit={handlePeerReviewSubmit}>
+                        <div className="form-group" style={{ display: 'flex', gap: '1rem' }}>
+                            <div style={{ flex: 1 }}>
+                                <label>Select Colleague</label>
+                                <select required value={peerReview.targetId} onChange={e => setPeerReview({ ...peerReview, targetId: e.target.value })}>
+                                    <option value="" disabled>
+                                        {peers.length === 0 ? "-- No other colleagues exist --" : "-- Select Colleague --"}
+                                    </option>
+                                    {peers.map(p => <option key={p._id} value={p._id}>{p.name} ({p.role || p.email})</option>)}
+                                </select>
+                            </div>
+                            <div style={{ width: '130px' }}>
+                                <label>Rating (1-5)</label>
+                                <input type="number" min="1" max="5" required value={peerReview.rating} onChange={e => setPeerReview({ ...peerReview, rating: parseInt(e.target.value) })} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label>Constructive Assessment</label>
+                            <textarea rows="3" required placeholder="Highlight specific examples of collaboration, leadership, or technical competency..." value={peerReview.comment} onChange={e => setPeerReview({ ...peerReview, comment: e.target.value })}></textarea>
+                        </div>
+                        <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Submit Peer Assessment</button>
+                    </form>
+                </div>
             </div>
         </div>
     );

@@ -6,18 +6,25 @@ import { toast } from 'react-toastify';
 
 const Login = () => {
     const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const submitHandler = async (e) => {
         e.preventDefault();
+
         try {
             const { data } = await api.post('/auth/login', { email, password });
+
             localStorage.setItem('userInfo', JSON.stringify(data));
             toast.success('Login successful!');
+
             navigate(`/${data.role.toLowerCase()}`);
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Invalid email or password');
+            const msg = err.response?.data?.message || 'Invalid email or password';
+            setError(msg);
+            toast.error(msg);
         }
     };
 
@@ -32,8 +39,11 @@ const Login = () => {
                 </p>
 
                 <form onSubmit={submitHandler}>
+
                     <label>Email Address</label>
                     <input
+                        id="email"
+                        name="email"
                         type="email"
                         placeholder="Enter your work email"
                         value={email}
@@ -43,6 +53,8 @@ const Login = () => {
 
                     <label>Password</label>
                     <input
+                        id="password"
+                        name="password"
                         type="password"
                         placeholder="Enter your password"
                         value={password}
@@ -50,7 +62,17 @@ const Login = () => {
                         required
                     />
 
-                    <button type="submit">Sign In</button>
+                    {/* ERROR MESSAGE FOR SELENIUM */}
+                    {error && (
+                        <div id="errorMsg" className="error">
+                            {error}
+                        </div>
+                    )}
+
+                    <button id="loginBtn" type="submit">
+                        Sign In
+                    </button>
+
                 </form>
 
                 <div className="divider">OR</div>
@@ -76,7 +98,6 @@ const Login = () => {
                     </div>
                 </div>
 
-                {/* OPTIONAL EXTRA INFO */}
                 <div style={{ marginTop: "40px", opacity: 0.8 }}>
                     <p>✔ Set Goals & KPIs</p>
                     <p>✔ Monthly Progress Tracking</p>

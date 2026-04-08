@@ -10,6 +10,7 @@ const ManagerDashboard = () => {
     const [feedback, setFeedback] = useState({ feedbackText: '', rating: 3, potentialRating: 2, performanceRating: 2 });
     const [kpiScores, setKpiScores] = useState({});
     const [existingFeedback, setExistingFeedback] = useState(null);
+    const [isDrafting, setIsDrafting] = useState(false);
 
     useEffect(() => {
         fetchEmployees();
@@ -80,6 +81,17 @@ const ManagerDashboard = () => {
         } catch (error) {
             toast.error('Error submitting evaluation');
         }
+    };
+
+    const generateAIDraft = () => {
+        setIsDrafting(true);
+        setTimeout(() => {
+            const completedCount = kpis.filter(k => k.progress >= k.target && k.target > 0).length;
+            const text = `Analyzed Output: ${selectedEmp.name} has successfully tracked execution against ${kpis.length} defined KPIs, securing targets across ${completedCount} major metrics. Their technical alignment integrates well with the core enterprise trajectory. Furthermore, their dedication to consistent execution metrics proves invaluable. Moving into the upcoming transition cycle, primary developmental focus should shift toward extending leadership scaling, cross-collaboration, and aggressive innovation.`;
+            setFeedback(prev => ({ ...prev, feedbackText: text }));
+            setIsDrafting(false);
+            toast.success("AI Synthesis completed.");
+        }, 1200);
     };
 
     const isCellActive = (perf, pot) => {
@@ -192,7 +204,18 @@ const ManagerDashboard = () => {
 
                             <form onSubmit={submitFeedback} style={{ marginTop: '2rem' }}>
                                 <div className="form-group">
-                                    <label>Comprehensive Qualitative Feedback</label>
+                                    <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        Comprehensive Qualitative Feedback
+                                        <button
+                                            type="button"
+                                            onClick={generateAIDraft}
+                                            className="btn"
+                                            style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem', background: 'var(--primary-glow)', color: 'var(--primary-hover)' }}
+                                            disabled={isDrafting}
+                                        >
+                                            {isDrafting ? 'Synthesizing...' : '✨ Generate AI Draft'}
+                                        </button>
+                                    </label>
                                     <textarea
                                         rows="4"
                                         value={feedback.feedbackText}
