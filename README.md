@@ -1,0 +1,263 @@
+# 🚀 PerformPulse – Employee Performance Management System
+
+PerformPulse is a modern full-stack web application designed to streamline employee performance tracking, KPI management, and feedback processes. It enables organizations to efficiently monitor progress, evaluate performance, and make data-driven decisions.
+
+---
+
+## 📌 Overview
+
+In today’s fast-paced work environment, tracking employee performance manually is inefficient and error-prone. PerformPulse solves this by providing a centralized platform where employees and managers can collaborate, set goals, and evaluate performance transparently.
+
+---
+
+## ✨ Key Features
+
+### 👨‍💼 Employee Features
+
+* Create and manage personal KPIs (Key Performance Indicators)
+* Track performance progress in real-time
+* View feedback and ratings from managers
+* Interactive performance dashboard
+
+### 🧑‍💼 Manager Features
+
+* Assign and review employee KPIs
+* Provide feedback and performance ratings
+* Monitor team performance analytics
+* Make informed decisions using insights
+
+### 🔐 Authentication & Security
+
+* Secure Login & Signup system
+* Password hashing using bcrypt
+* JWT-based authentication
+* Protected routes and role-based access
+
+### 📊 Dashboard & Analytics
+
+* Performance score visualization
+* KPI tracking charts
+* Employee progress reports
+* Clean and responsive UI
+
+---
+
+## 🛠️ Tech Stack
+
+### 🌐 Frontend
+
+* React.js
+* CSS / Tailwind / Bootstrap
+* Axios
+
+### ⚙️ Backend
+
+* Node.js
+* Express.js
+
+### 🗄️ Database
+
+* MongoDB (Mongoose ODM)
+
+### 🔑 Authentication
+
+* JWT (JSON Web Token)
+* bcrypt.js
+
+### 🧰 Tools & Utilities
+
+* Git & GitHub
+* Postman (API testing)
+
+---
+
+## 📂 Project Structure
+
+```
+PerformPulse/
+│
+├── client/                # React frontend
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── utils/
+│   │   └── App.js
+│
+├── server/                # Node.js backend
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── config/
+│   └── server.js
+│
+├── .env
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 🔽 Clone the Repository
+
+```bash
+git clone https://github.com/hitesh788/PerformPulse.git
+cd PerformPulse
+```
+
+---
+
+### 📦 Install Dependencies
+
+#### Backend Setup
+
+```bash
+cd server
+npm install
+```
+
+#### Frontend Setup
+
+```bash
+cd client
+npm install
+```
+
+---
+
+### 🔐 Environment Variables
+
+Create a `.env` file inside the **server** folder:
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+---
+
+### ▶️ Run the Application
+
+#### Start Backend Server
+
+```bash
+cd server
+npm start
+```
+
+#### Start Frontend
+
+```bash
+cd client
+npm start
+```
+
+---
+
+## 🌐 Application Usage
+
+1. Open your browser and go to:
+   👉 http://localhost:3000
+
+2. Register a new account or login
+
+3. Employees can:
+
+   * Create KPIs
+   * Track their performance
+
+4. Managers can:
+
+   * Review employee KPIs
+   * Provide feedback and ratings
+
+---
+
+## 📊 Example Workflow
+
+* Employee logs in
+* Creates KPI (e.g., "Increase sales by 20%")
+* Updates progress regularly
+* Manager reviews KPI
+* Manager provides rating & feedback
+* System updates performance score
+
+---
+
+## 🔒 Security Implementation
+
+* Passwords are hashed using bcrypt
+* JWT tokens for secure session handling
+* API route protection using middleware
+* Role-based access control (Employee / Manager)
+
+---
+
+## 📸 Screenshots
+
+> *Add screenshots of your UI here for better presentation*
+
+---
+
+## 🚀 Future Enhancements
+
+* 📱 Mobile App Version
+* 📊 Advanced Analytics with AI insights
+* 🔔 Real-time Notifications
+* 📅 Calendar & Goal Deadlines
+* 🌍 Multi-organization support
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+Steps to contribute:
+
+1. Fork the repository
+2. Create a new branch (`feature/your-feature`)
+3. Commit your changes
+4. Push to your branch
+5. Open a Pull Request
+
+---
+
+## 🐛 Bug Reporting
+
+If you find any bugs, please open an issue in the repository with proper details.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👨‍💻 Author
+
+**Hitesh Joshi**
+🔗 GitHub: https://github.com/hitesh788
+
+---
+
+## ⭐ Show Your Support
+
+If you like this project:
+
+* ⭐ Star the repository
+* 🍴 Fork it
+* 🧑‍💻 Contribute
+
+---
+
+## 💡 Final Note
+
+PerformPulse is built to simplify performance management while maintaining scalability, security, and usability. It demonstrates strong full-stack development skills and real-world application design.
+
+---
+
